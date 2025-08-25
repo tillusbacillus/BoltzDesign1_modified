@@ -11,9 +11,9 @@ fi
 
 # Create and activate environment
 echo "📦 Creating conda environment..."
-conda create -n boltz_design python=3.10 -y
+conda create python=3.10 -y -p ./env/
 source $(conda info --base)/etc/profile.d/conda.sh
-conda activate boltz_design
+conda activate ./env/
 
 # Install boltz
 if [ -d "boltz" ]; then
