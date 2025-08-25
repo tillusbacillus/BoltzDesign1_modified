@@ -240,12 +240,11 @@ Examples:
                         help='Show animation')
     parser.add_argument('--save_trajectory', type=str2bool, default=False,
                         help='Save trajectory')
-    return parser.parse_args()
 
     ## Additional arguments by Till
     parser.add_argument('--yaml_path', type=str, default='',
                         help='Path to an input yaml file (skips usual creation of yaml file)')    
-
+    return parser.parse_args()
 class YamlConfig:
     """Configuration class for managing directories"""
     def __init__(self, main_dir: str = None):
