@@ -15,7 +15,8 @@ from pathlib import Path
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.simplefilter(action='ignore', category=DeprecationWarning)
-sys.path.append(f'{os.getcwd()}/boltzdesign')
+# sys.path.append(f'{os.getcwd()}/boltzdesign')
+sys.path.append('/nfs/scistore20/praetgrp/shared/software/BoltzDesign1_modified/boltzdesign')
 
 from boltzdesign_utils import *
 from ligandmpnn_utils import *
@@ -241,6 +242,9 @@ Examples:
                         help='Save trajectory')
     return parser.parse_args()
 
+    ## Additional arguments by Till
+    parser.add_argument('--yaml_path', type=str, default='',
+                        help='Path to an input yaml file (skips usual creation of yaml file)')    
 
 class YamlConfig:
     """Configuration class for managing directories"""
@@ -744,12 +748,26 @@ def run_pipeline_steps(args, config, boltz_model, yaml_dir, output_dir):
     
     return results
 
+
+## additions by till
+
+def read_yaml_file(filepath: str) -> dict:
+    """Reads a YAML file and returns its content as a dictionary."""
+    with open(filepath, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    return data
+
 def main():
     """Main function for running the BoltzDesign pipeline"""
     args = setup_environment()
     boltz_model, config_obj = initialize_pipeline(args)
-    yaml_dict, yaml_dir = generate_yaml_config(args, config_obj)
+    if args.yaml_path != '':
+        yaml_dir = args.yaml_path
+        yaml_dict = read_yaml_file(yaml_dir)
+    else:
+        yaml_dict, yaml_dir = generate_yaml_config(args, config_obj)
 
+    print(f'yaml: {yaml_dict}, {yaml_dir}') # temp debug
     print("Generated YAML configuration:")
     for key, value in yaml_dict.items():
         if isinstance(value, list):
