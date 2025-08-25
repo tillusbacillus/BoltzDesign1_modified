@@ -12,7 +12,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yehlincho/BoltzDesign1.git
+   git clone [https://github.com/yehlincho/BoltzDesign1.git](https://github.com/tillusbacillus/BoltzDesign1_modified.git)
    cd BoltzDesign1
    ```
 
